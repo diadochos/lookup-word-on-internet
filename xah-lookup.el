@@ -2,7 +2,8 @@
 
 ;; Copyright © 2011-2015 by Xah Lee
 
-;; Author: Xah Lee ( http://xahlee.org/ )
+;; Original Author: Xah Lee ( http://xahlee.org/ )
+;; Author: diadochos
 ;; Version: 2.1.1
 ;; Created: 14 Nov 2011
 ;; Keywords: help, docs, convenience
