@@ -164,7 +164,10 @@ For a list of online reference sites, see:
                 (buffer-substring-no-properties (region-beginning) (region-end))
               (thing-at-point 'symbol))))
 
-    (setq ξword (replace-regexp-in-string " " "%20" (xah-lookup--asciify-string ξword)))
+    (setq ξword
+          ;; (replace-regexp-in-string " " "%20"
+                                    (xah-lookup--asciify-string ξword))
+          ;; )
 
     (setq ξrefUrl
           (if φsite-to-use
