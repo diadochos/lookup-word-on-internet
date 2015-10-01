@@ -180,6 +180,36 @@ For a list of online reference sites, see:
         (funcall xah-lookup-browser-function ξmyUrl)
       (funcall φbrowser-function ξmyUrl))))
 
+(defun acquire-region ()
+  "Utility function to acquire the word or phrase either at select or at the cursor."
+  (interactive)
+  (let ((editable (not buffer-read-only))
+        (pt (save-excursion (mouse-set-point last-nonmenu-event)))
+        beg end)
+    (if (and mark-active
+             (<= (region-beginning) pt) (<= pt (region-end)) )
+        (setq beg (region-beginning)
+              end (region-end))
+      (save-excursion
+        (goto-char pt)
+        (setq end (progn (forward-word) (point)))
+        (setq beg (progn (backward-word) (point)))
+        ))
+    (buffer-substring-no-properties beg end)))
+
+(defmacro xah-add-func (site name)
+  "SITE: website to search; NAME: name of the functions to define."
+  `(defun ,(intern (format "xah-lookup-%s" name)) (&optional φword)
+     (format "Lookup definition of current word or text selection in URL `%s'" ,site)
+     (xah-lookup-word-on-internet φword ,site)))
+
+(defmacro xah-add-cmd (name)
+  "NAME: name of the functions to define (needs to match the name you gave in xah-add-func)."
+  `(defun ,(intern (format "xah-lookup-%s-command" name)) ()
+     (format "Command to run xah-lookup-%s" ,name)
+     (interactive)
+     (,(intern (format "xah-lookup-%s" name)) (acquire-region))))
+
 ;;;###autoload
 (defun xah-lookup-google (&optional φword)
   "Lookup current word or text selection in Google Search."
